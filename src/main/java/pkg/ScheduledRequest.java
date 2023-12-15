@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 @Slf4j
 @EnableScheduling
 @RequiredArgsConstructor
-//@Component
+@Component
 public class ScheduledRequest {
 
     private final Producer producer;
