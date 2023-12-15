@@ -12,6 +12,8 @@ public class Producer {
     }
 
     public void create(String data) {
-        kafkaTemplate.send("devwangi", data);
+        String topicName = System.getenv("topic.name");
+        System.out.println(topicName + " >> " + data);
+        kafkaTemplate.send(topicName, data);
     }
 }

@@ -1,14 +1,16 @@
-package pkg.schedule;
+package pkg;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import pkg.Address;
+import org.springframework.web.client.RestTemplate;
 import pkg.producer.Producer;
 
 import java.io.BufferedReader;
@@ -27,15 +29,14 @@ import java.time.format.DateTimeFormatter;
 public class ScheduledRequest {
 
     private final Producer producer;
+//    private final int rate = Integer.parseInt(System.getenv("schedule.rate"));
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRate = 15000)
     public void exec() {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
         System.out.println("스케쥴러 테스트 : " + LocalDateTime.now().format(dateTimeFormatter));
 
         String log = "스케쥴러 테스트 : " + LocalDateTime.now().format(dateTimeFormatter);
-
-
 
         /////////////////////////////
 
@@ -105,7 +106,7 @@ public class ScheduledRequest {
                 }
             }
 
-            producer.create(log);
+//            producer.create(log);
             System.out.println("성공 : " + cnt);
         } catch (Exception e) {
             e.printStackTrace();

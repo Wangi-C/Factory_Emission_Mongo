@@ -13,10 +13,10 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
+//@Configuration
 public class KafkaConsumerConfig {
 
-    @Autowired
+//    @Autowired
     private KafkaProperties properties;
 
     @Bean
