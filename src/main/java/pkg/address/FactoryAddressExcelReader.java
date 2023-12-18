@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
-@Component
+//@Component
 public class FactoryAddressExcelReader {
 
     public ArrayList<Factory> readExcel() {

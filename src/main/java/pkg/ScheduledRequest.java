@@ -5,12 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 import pkg.producer.Producer;
 
 import java.io.BufferedReader;
@@ -18,8 +15,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 
 @Slf4j
@@ -33,12 +28,6 @@ public class ScheduledRequest {
 
     @Scheduled(fixedRate = 15000)
     public void exec() {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
-        System.out.println("스케쥴러 테스트 : " + LocalDateTime.now().format(dateTimeFormatter));
-
-        String log = "스케쥴러 테스트 : " + LocalDateTime.now().format(dateTimeFormatter);
-
-        /////////////////////////////
 
         try {
             // API 요청을 위한 기본 URL 설정
@@ -94,11 +83,8 @@ public class ScheduledRequest {
                         if (item.path("fact_manage_nm").asText().equals(address.getCode())) {
                             ((ObjectNode) item).put("lat", address.getLatitude());
                             ((ObjectNode) item).put("lon", address.getLongitude());
-//                            System.out.println(item.toString());
 
-                            producer.create(item.toString());
-
-
+//                            producer.create(item.toString());
                             cnt++;
                         }
                     }
@@ -106,8 +92,6 @@ public class ScheduledRequest {
                 }
             }
 
-//            producer.create(log);
-            System.out.println("성공 : " + cnt);
         } catch (Exception e) {
             e.printStackTrace();
         }

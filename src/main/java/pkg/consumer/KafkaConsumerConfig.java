@@ -16,7 +16,7 @@ import java.util.Map;
 //@Configuration
 public class KafkaConsumerConfig {
 
-//    @Autowired
+    @Autowired
     private KafkaProperties properties;
 
     @Bean

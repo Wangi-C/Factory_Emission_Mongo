@@ -29,6 +29,8 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework:spring-test' // Spring Boot 프로젝트가 아닌 경우
     testImplementation 'junit:junit:4.12' // JUnit 4 추가
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 }
 test {
     useJUnitPlatform()
