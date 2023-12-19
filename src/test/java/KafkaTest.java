@@ -1,27 +1,20 @@
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import net.minidev.json.JSONUtil;
+import org.json.JSONArray;
 import org.json.JSONObject;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import pkg.App;
-import pkg.address.Factory;
 import pkg.address.AddressServiceAPI;
-import pkg.address.Coordinates;
 import pkg.address.FactoryAddressExcelReader;
-import pkg.consumer.Consumer;
 import pkg.entity.People;
 import pkg.producer.Producer;
-import pkg.service.PeopleService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest(classes = App.class)
@@ -30,9 +23,10 @@ public class KafkaTest {
     private AddressServiceAPI service;
 //    @Autowired
     private FactoryAddressExcelReader factoryAddress;
-    @Autowired private Producer producer;
+//    @Autowired
+    private Producer producer;
 
-    @Test
+//    @Test
     @DisplayName("insert json producer >> consumer")
     void insertJson() {
         try {
@@ -51,5 +45,36 @@ public class KafkaTest {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    @DisplayName("json to Java Object")
+    void convertJsonObject() throws Exception {
+        String jsonData = "[\n" +
+                "  {\n" +
+                "    \"age\": 37,\n" +
+                "    \"name\": \"wangi01\",\n" +
+                "    \"salary\": 4000\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"age\": 45,\n" +
+                "    \"name\": \"wangi02\",\n" +
+                "    \"salary\": 5000\n" +
+                "  },\n" +
+                "  {\n" +
+                "    \"age\": 46,\n" +
+                "    \"name\": \"wangi03\",\n" +
+                "    \"salary\": 6000\n" +
+                "  }\n" +
+                "]";
+
+        JSONArray jsonArray = new JSONArray(jsonData);
+        System.out.println("jsonArray = " + jsonArray);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<People> peopleList = objectMapper.readValue(jsonData, new TypeReference<List<People>>() {
+        });
+
+        System.out.println(peopleList);
     }
 }

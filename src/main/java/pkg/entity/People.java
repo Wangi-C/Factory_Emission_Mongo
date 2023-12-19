@@ -1,9 +1,6 @@
 package pkg.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @ToString
 @AllArgsConstructor
+@NoArgsConstructor
 public class People {
     @Id
     private String _id;
